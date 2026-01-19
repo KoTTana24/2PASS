@@ -223,6 +223,13 @@ class PasswordManager
         }
     }
 
+    // ================= GITHUB LINK =================
+
+    static void ShowGitHubLink()
+    {
+        Console.WriteLine("\nGitHub Project: https://github.com/KoTTana24/To-Pass/");
+    }
+
     // ================= FEATURES =================
 
     static void AddService()
@@ -277,11 +284,12 @@ class PasswordManager
 
         while (true)
         {
-            Console.WriteLine("\n=== TO-PASS ===");
+            Console.WriteLine("\n=== PASSWORD MANAGER ===");
             Console.WriteLine("1. " + T("Добавить сервис", "Add service"));
             Console.WriteLine("2. " + T("Получить пароль", "Get password"));
             Console.WriteLine("3. " + T("Сменить язык", "Change language"));
-            Console.WriteLine("4. " + T("Выйти", "Exit"));
+            Console.WriteLine("4. " + T("GitHub проект", "GitHub Project"));
+            Console.WriteLine("5. " + T("Выйти", "Exit"));
             Console.Write(T("Выбор: ", "Choice: "));
 
             string choice = Console.ReadLine() ?? "";
@@ -289,7 +297,9 @@ class PasswordManager
             if (choice == "1") AddService();
             else if (choice == "2") GetService();
             else if (choice == "3") ChooseLanguage();
-            else if (choice == "4") break;
+            else if (choice == "4") ShowGitHubLink();
+            else if (choice == "5") break;
         }
     }
 }
+
