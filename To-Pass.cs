@@ -8,24 +8,82 @@ class PasswordManager
 {
     static string vaultFile = "vault.txt";
     static string configFile = "config.txt";
+    static string masterFile = "master.cfg";
+
     static string encryptionKey = "super-secret-key-change-this";
 
     static Dictionary<string, string> vault = new Dictionary<string, string>();
-
     static string language = "RU";
+
+    // ================= MASTER PASSWORD =================
+
+    static string Hash(string input)
+    {
+        using SHA256 sha = SHA256.Create();
+        byte[] bytes = sha.ComputeHash(Encoding.UTF8.GetBytes(input));
+        return Convert.ToBase64String(bytes);
+    }
+
+    static void SetupMasterPassword()
+    {
+        Console.WriteLine("=== CREATE MASTER PASSWORD ===");
+        Console.WriteLine("Создайте мастер-пароль / Create master password:");
+
+        string pass1 = ReadHidden();
+        Console.WriteLine("\nПовторите пароль / Repeat password:");
+        string pass2 = ReadHidden();
+
+        if (pass1 != pass2 || pass1.Length < 4)
+        {
+            Console.WriteLine("Пароли не совпадают или слишком короткие!");
+            SetupMasterPassword();
+            return;
+        }
+
+        File.WriteAllText(masterFile, Hash(pass1));
+        Console.WriteLine("Мастер-пароль сохранён!");
+    }
+
+    static bool CheckMasterPassword()
+    {
+        string savedHash = File.ReadAllText(masterFile);
+
+        Console.WriteLine("Введите мастер-пароль / Enter master password:");
+        string input = ReadHidden();
+
+        return Hash(input) == savedHash;
+    }
+
+    static string ReadHidden()
+    {
+        StringBuilder input = new StringBuilder();
+        ConsoleKey key;
+
+        while ((key = Console.ReadKey(true).Key) != ConsoleKey.Enter)
+        {
+            if (key == ConsoleKey.Backspace && input.Length > 0)
+            {
+                input.Remove(input.Length - 1, 1);
+                Console.Write("\b \b");
+            }
+            else if (!char.IsControl((char)key))
+            {
+                input.Append((char)key);
+                Console.Write("*");
+            }
+        }
+        Console.WriteLine();
+        return input.ToString();
+    }
 
     // ================= LANGUAGE =================
 
     static void LoadLanguage()
     {
         if (File.Exists(configFile))
-        {
             language = File.ReadAllText(configFile).Trim();
-        }
         else
-        {
             ChooseLanguage();
-        }
     }
 
     static void SaveLanguage()
@@ -39,9 +97,7 @@ class PasswordManager
         Console.WriteLine("1. Русский");
         Console.WriteLine("2. English");
         Console.Write("Choice / Выбор: ");
-
         string choice = Console.ReadLine();
-
         language = choice == "2" ? "EN" : "RU";
         SaveLanguage();
     }
@@ -124,7 +180,6 @@ class PasswordManager
         {
             if (line.StartsWith("SERVICE:"))
                 service = line.Replace("SERVICE:", "");
-
             else if (line.StartsWith("PASSWORD:"))
                 vault[service] = line.Replace("PASSWORD:", "");
         }
@@ -142,7 +197,6 @@ class PasswordManager
 
         string password = GeneratePassword(length);
         vault[service] = Encrypt(password);
-
         SaveVault();
 
         Console.WriteLine(T("\nПароль создан и сохранён!", "\nPassword created and saved!"));
@@ -168,6 +222,18 @@ class PasswordManager
 
     static void Main()
     {
+        // MASTER PASSWORD CHECK
+        if (!File.Exists(masterFile))
+            SetupMasterPassword();
+        else
+        {
+            if (!CheckMasterPassword())
+            {
+                Console.WriteLine("Доступ запрещён / Access denied");
+                return;
+            }
+        }
+
         LoadLanguage();
         LoadVault();
 
