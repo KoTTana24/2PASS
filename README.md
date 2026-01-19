@@ -7,6 +7,13 @@
 ## Stable work on Windows 🪟
 ## Stable work on MacOs 🍎
 
+# To-TEST-Pass a test version of To-Pass he has been not 100% stable
+# To-Pass a full stable version
+
+## !If you use unstable version you can damage your To-Pass files
+## !It is recommended to use the unstable version on another user.
+
+
 # About Accounts 
 
 ### You can register accounts and add master password to account.
