@@ -3,7 +3,9 @@
 
 ### To Pass - Password manager
 
-
+## Stable work on Linux
+## Maybe work on Windows
+## Maybe work on MacOs
 
 
 # A little bit about how it works / Немного о том как он работает
