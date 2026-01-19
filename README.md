@@ -13,17 +13,21 @@
 
 ## EN
 
-### All passwords and services are stored in the valut.txt file in encrypted form. The master password is stored in the master.cfg file in encrypted form.
+## File, What's in it
+## master.cfg  -   Encrypted master password hash
+## vault.txt   -  Encrypted service passwords
+## config.txt  -   Selected interface language
 
 ### The characters used to generate passwords by default are “abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+<>?”
 
-### The program language is remembered and stored in the config.txt file
+
 
 
 ## RU
 
-### Все пароли и сервисы хранятся в файле valut.txt в зашифрованом виде. Мастер пароль хранится в файле master.cfg в зашифрованом виде.
+## Файл, Что в нём
+## master.cfg	- Зашифрованный хэш мастер-пароля
+## vault.txt - Зашифрованные пароли сервисов
+## config.txt	- Выбранный язык интерфейса
 
 ### Символы которые используются для генерации паролей по умолчанию - "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+<>?"
-
-### Язык программы запоминается и хранится в файле config.txt
