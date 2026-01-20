@@ -131,7 +131,7 @@ class PasswordManager
 
     static void CreateAccount()
     {
-        Console.WriteLine("\n=== CREATE NEW USER ===");
+        Console.WriteLine("\n=== CREATE NEW 2PASS USER ===");
         Console.WriteLine("Введите имя пользователя / Enter username:");
 
         string userName = Console.ReadLine() ?? "";
@@ -272,7 +272,7 @@ class PasswordManager
         Console.Write(T("Введите сервис: ", "Enter service: "));
         string service = Console.ReadLine() ?? "";
 
-        Console.Write(T("Введите длину пароля: ", "Enter password length: "));
+        Console.Write(T("Введите длину пароля(Рекомендованно использовать минимум 12 символов для безопасности): ", "Enter password length(We recommend using at least 12 characters for security purposes): "));
         if (!int.TryParse(Console.ReadLine(), out int length) || length < 4)
         {
             Console.WriteLine(T("Некорректная длина!", "Invalid length!"));
@@ -331,7 +331,7 @@ class PasswordManager
                 {
                     while (true)
                     {
-                        Console.WriteLine("\n=== PASSWORD MANAGER ===");
+                        Console.WriteLine("\n=== 2PASS ===");
                         Console.WriteLine("1. " + T("Добавить сервис", "Add service"));
                         Console.WriteLine("2. " + T("Получить пароль", "Get password"));
                         Console.WriteLine("3. " + T("Сменить язык", "Change language"));
