@@ -131,7 +131,7 @@ class PasswordManager
 
     static void CreateAccount()
     {
-        Console.WriteLine("\n=== CREATE NEW 2PASS USER ===");
+        Console.WriteLine("\n=== CREATE NEW USER ===");
         Console.WriteLine("Введите имя пользователя / Enter username:");
 
         string userName = Console.ReadLine() ?? "";
@@ -265,6 +265,26 @@ class PasswordManager
         Console.WriteLine("\nGitHub Project: https://github.com/KoTTana24/To-Pass/");
     }
 
+// ================= SHOW PASSWORDS =================
+
+static void ShowPasswordsList()
+{
+    if (vault.Count == 0)
+    {
+        Console.WriteLine(T("Список паролей пуст.", "No passwords saved."));
+        return;
+    }
+
+    Console.WriteLine(T("\nСписок всех паролей и сервисов:", "\nList of all passwords and services:"));
+    foreach (var entry in vault)
+    {
+        string service = entry.Key;
+        string password = DecryptAES(entry.Value, passwordKey);
+        Console.WriteLine($"{T("Сервис:", "Service:")} {service}, {T("Пароль:", "Password:")} {password}");
+    }
+}
+
+
     // ================= FEATURES =================
 
     static void AddService()
@@ -272,7 +292,7 @@ class PasswordManager
         Console.Write(T("Введите сервис: ", "Enter service: "));
         string service = Console.ReadLine() ?? "";
 
-        Console.Write(T("Введите длину пароля(Рекомендованно использовать минимум 12 символов для безопасности): ", "Enter password length(We recommend using at least 12 characters for security purposes): "));
+        Console.Write(T("Введите длину пароля(Рекомендованно использовать минимум 12 символов для безопасности): ", "Enter password length(We recommend using at least 12 characters for security purposes.): "));
         if (!int.TryParse(Console.ReadLine(), out int length) || length < 4)
         {
             Console.WriteLine(T("Некорректная длина!", "Invalid length!"));
@@ -334,18 +354,20 @@ class PasswordManager
                         Console.WriteLine("\n=== 2PASS ===");
                         Console.WriteLine("1. " + T("Добавить сервис", "Add service"));
                         Console.WriteLine("2. " + T("Получить пароль", "Get password"));
-                        Console.WriteLine("3. " + T("Сменить язык", "Change language"));
-                        Console.WriteLine("4. " + T("GitHub проект", "GitHub Project"));
-                        Console.WriteLine("5. " + T("Выход из приложения", "Exit"));
+                        Console.WriteLine("3. " + T("Посмотреть все пароли", "Show all passwords"));
+                        Console.WriteLine("4. " + T("Сменить язык", "Change language"));
+                        Console.WriteLine("5. " + T("GitHub проект", "GitHub Project"));
+                        Console.WriteLine("6. " + T("Выход из приложения", "Exit"));
                         Console.Write(T("Выбор: ", "Choice: "));
 
                         string subChoice = Console.ReadLine() ?? "";
 
                         if (subChoice == "1") AddService();
                         else if (subChoice == "2") GetService();
-                        else if (subChoice == "3") ChooseLanguage();
-                        else if (subChoice == "4") ShowGitHubLink();
-                        else if (subChoice == "5") return;
+                        else if (subChoice == "3") ShowPasswordsList();
+                        else if (subChoice == "4") ChooseLanguage();
+                        else if (subChoice == "5") ShowGitHubLink();
+                        else if (subChoice == "6") return;
                     }
                 }
             }
