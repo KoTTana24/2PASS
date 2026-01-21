@@ -41,6 +41,8 @@
 ## vault.txt   -  Encrypted service passwords
 ## config.txt  -   Selected interface language
 
+## The program has a smart search feature.
+
 ### The characters used to generate passwords by default are “abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+<>?” and you can also use Cyrilic: "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
 
 
@@ -60,5 +62,7 @@
 ## master.cfg	- Зашифрованный хэш мастер-пароля
 ## vault.txt - Зашифрованные пароли сервисов
 ## config.txt	- Выбранный язык интерфейса
+
+## В программе есть умный поиск
 
 ### Символы которые используются для генерации паролей по умолчанию - "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+<>?" так же вы можете использовать Кирилицу: "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
