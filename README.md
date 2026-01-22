@@ -23,6 +23,9 @@
 ### Account work locale
 
 
+### you can write !clear this clear console
+
+
 # A little bit about how it works / Немного о том как он работает
 
 
