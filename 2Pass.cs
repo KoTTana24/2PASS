@@ -402,6 +402,45 @@ class PasswordManager
         }
     }
 
+    static void AddExistingService()
+    {
+        Console.Write(T("Введите сервис: ", "Enter service: "));
+        string service = Console.ReadLine() ?? "";
+
+        if (string.IsNullOrWhiteSpace(service))
+        {
+            Console.WriteLine(T("Некорректное имя сервиса!", "Invalid service name!"));
+            return;
+        }
+
+        // Проверка — существует ли уже
+        if (vault.ContainsKey(service))
+        {
+            Console.Write(T("Сервис уже существует. Перезаписать? (y/n): ",
+                            "Service exists. Overwrite? (y/n): "));
+            string overwrite = Console.ReadLine()?.ToLower() ?? "n";
+
+            if (!(overwrite == "y" || overwrite == "д"))
+                return;
+        }
+
+        Console.WriteLine(T("Введите пароль (скрытый ввод): ",
+                            "Enter password (hidden input): "));
+        string password = ReadHidden();
+
+        if (string.IsNullOrEmpty(password))
+        {
+            Console.WriteLine(T("Пароль пустой!", "Password is empty!"));
+            return;
+        }
+
+        vault[service] = EncryptAES(password, passwordKey);
+        SaveVault();
+
+        Console.WriteLine(T("Пароль успешно добавлен!",
+                            "Password successfully added!"));
+    }
+
     static void ShowPasswordsList()
     {
         if (vault.Count == 0)
@@ -478,11 +517,12 @@ class PasswordManager
                     while (true)
                     {
                         Console.WriteLine("\n=== 2PASS ===");
-                        Console.WriteLine("1. " + T("Добавить сервис", "Add service"));
-                        Console.WriteLine("2. " + T("Получить пароль (умный поиск)", "Get password (smart search)"));
-                        Console.WriteLine("3. " + T("Список сервисов", "Service list"));
-                        Console.WriteLine("4. " + T("Настройки", "Settings"));
-                        Console.WriteLine("5. " + T("Выход", "Exit"));
+                        Console.WriteLine("1. " + T("Создать пароль", "Generate password"));
+                        Console.WriteLine("2. " + T("Добавить существующий пароль", "Add existing password"));
+                        Console.WriteLine("3. " + T("Получить пароль (умный поиск)", "Get password (smart search)"));
+                        Console.WriteLine("4. " + T("Список сервисов", "Service list"));
+                        Console.WriteLine("5. " + T("Настройки", "Settings"));
+                        Console.WriteLine("6. " + T("Выход", "Exit"));
                         Console.Write(T("Выбор: ", "Choice: "));
 
                         string sub = Console.ReadLine() ?? "";
@@ -495,10 +535,11 @@ class PasswordManager
                         }
 
                         if (sub == "1") AddService();
-                        else if (sub == "2") GetService();
-                        else if (sub == "3") ShowPasswordsList();
-                        else if (sub == "4") SettingsMenu();
-                        else if (sub == "5") return;
+                        else if (sub == "2") AddExistingService();
+                        else if (sub == "3") GetService();
+                        else if (sub == "4") ShowPasswordsList();
+                        else if (sub == "5") SettingsMenu();
+                        else if (sub == "6") return;
                     }
                 }
             }
